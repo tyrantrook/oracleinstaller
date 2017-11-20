@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="Oracle 10.2" Language="1033" Version="1.0.0.0" Manufacturer="Oracle" UpgradeCode="b60d2dfd-8505-4f4e-9605-5fd49a330e2f">
+		
+		<Package InstallerVersion="011" Compressed="yes" InstallScope="perMachine" 
+						 Comments="Oracle Test installer" Description="This is a package configured to install Oracle 10.2 with the recommended settings in the specific location required by Team 2 Tools."/>
+		<Media Id="1" EmbedCab="yes"/>
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate />
+
+		<Feature Id="ProductFeature" Title="Oracle 10.2 Silent Installer" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="oracle" Name="oracle">
+			<Directory Id="product" Name="product">
+				<Directory Id="10.2.0" Name="10.2.0">
+					<Directory Id="32bit" Name="32bit"> 
+						<Directory Id="INSTALLFOLDER" Name="OracleTest" />
+					</Directory>
+				</Directory>
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+			<Component Id="ProductComponent">
+			  
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>
