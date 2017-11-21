@@ -8,8 +8,9 @@
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 		<MediaTemplate />
 
-		<Feature Id="ProductFeature" Title="Oracle 10.2 Silent Installer" Level="1">
-			<ComponentGroupRef Id="ProductComponents" />
+		<Feature Id="Complete" Title="Oracle 10.2 Silent Installer" Level="1">
+			<ComponentGroupRef Id="32bitInstaller" />
+      <ComponentGroupRef Id="32bitData" />
 		</Feature>
 	</Product>
 
@@ -17,8 +18,9 @@
 		<Directory Id="oracle" Name="oracle">
 			<Directory Id="product" Name="product">
 				<Directory Id="10.2.0" Name="10.2.0">
-					<Directory Id="32bit" Name="32bit"> 
-						<Directory Id="INSTALLFOLDER" Name="OracleTest" />
+					<Directory Id="32bit" Name="32bit">
+						<Directory Id="INSTALLFOLDER" Name="OracleTest">
+						</Directory>
 					</Directory>
 				</Directory>
 			</Directory>
@@ -26,11 +28,40 @@
 	</Fragment>
 
 	<Fragment>
-		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
-			<Component Id="ProductComponent">
-			  
-			</Component>
+		<ComponentGroup Id="32bitInstaller" Directory="INSTALLFOLDER">
+			<Component Id="SetupEXE" Guid="E90CD492-4F7D-4F5B-B2CA-3D2F9A2C5E66">
+				<RemoveFolder Id="oracle" On="uninstall" />
+				<RegistryValue Root="HKLM" Key="Software\WoW6432Node\Oracle" Type="string" Value="" KeyPath="yes"/>
+        <File
+						Id="SetupEXE" Name="setup.exe" DiskId="1" Source="setup.exe">
+        </File>
+      </Component>
+      <Component Id="AutorunINF" Guid="C7F7C076-9AB8-4E4A-A02E-0D5127B656F8">
+        <File
+						Id="AutorunINF" Name="autorun.inf" DiskId="1" Source="autorun.inf">
+        </File>
+      </Component>
+      <Component Id="welcomeScreen" Guid="561DCFB4-741B-42E4-94D8-A03AF8C15610">
+        <File
+						Id="welcome.html" Name="welcome.html" DiskId="1" Source="welcome.html">
+        </File>
+      </Component>
 		</ComponentGroup>
+    <ComponentGroup Id="32bitData" Directory="INSTALLFOLDER">
+      <Component Id="MainExecutable" Guid="E90CD492-4F7D-4F5B-B2CA-3D2F9A2C5E66">
+        <RemoveFolder Id="oracle" On="uninstall" />
+        <RegistryValue Root="HKLM" Key="Software\WoW6432Node\Oracle" Type="string" Value="" KeyPath="yes"/>
+        <File
+						Id="SetupEXE" Name="setup.exe" DiskId="1" Source="setup.exe">
+        </File>
+        <File
+						Id="AutorunINF" Name="autorun.inf" DiskId="1" Source="autorun.inf">
+        </File>
+        <File
+						Id="welcome.html" Name="welcome.html" DiskId="1" Source="welcome.html">
+        </File>
+      </Component>
+    </ComponentGroup>
 	</Fragment>
+
 </Wix>
